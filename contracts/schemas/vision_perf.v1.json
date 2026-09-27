@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/vision_perf.v1",
+  "title": "Vision pipeline performance window",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "fps",
+    "latency_ms",
+    "frames_dropped",
+    "camera_ok",
+    "model"
+  ],
+  "properties": {
+    "fps": {
+      "type": "number",
+      "minimum": 0
+    },
+    "latency_ms": {
+      "type": "object",
+      "required": [
+        "p50",
+        "p95",
+        "max"
+      ],
+      "properties": {
+        "p50": {
+          "type": "number",
+          "minimum": 0
+        },
+        "p95": {
+          "type": "number",
+          "minimum": 0
+        },
+        "max": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "frames_dropped": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "camera_ok": {
+      "type": "boolean"
+    },
+    "model": {
+      "type": "object",
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "backend": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

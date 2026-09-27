@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/envelope.v1",
+  "title": "Common message envelope",
+  "description": "Every MQTT payload is an envelope; 'data' must validate against the schema named in 'schema'.",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "schema",
+    "device_id",
+    "seq",
+    "mono_ms",
+    "data"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+\\.v[0-9]+$"
+    },
+    "device_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]{3,32}$"
+    },
+    "boot_id": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Increments on every device boot."
+    },
+    "seq": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Per-device increasing message counter (resets on boot)."
+    },
+    "mono_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Sender monotonic clock in ms."
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC wall-clock time; optional when not synced."
+    },
+    "data": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

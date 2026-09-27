@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/health_state.v1",
+  "title": "Motor health state (DRAFT, Phase 5)",
+  "x-status": "draft",
+  "type": "object",
+  "required": [
+    "status"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "NORMAL",
+        "WARNING",
+        "CRITICAL",
+        "UNKNOWN"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/device_heartbeat.v1",
+  "title": "Embedded device heartbeat",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "uptime_ms",
+    "machine_state"
+  ],
+  "properties": {
+    "uptime_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "machine_state": {
+      "type": "string"
+    },
+    "rssi_dbm": {
+      "type": "integer",
+      "maximum": 0
+    },
+    "free_heap_bytes": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false
+}

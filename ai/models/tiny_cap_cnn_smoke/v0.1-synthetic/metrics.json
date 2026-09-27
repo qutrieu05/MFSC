@@ -1,0 +1,77 @@
+{
+  "data_source": "synthetic",
+  "dataset": {
+    "n_sessions": 3,
+    "session_ids": [
+      "s01",
+      "s02",
+      "s03"
+    ],
+    "per_session": {
+      "s01": {
+        "n": 12,
+        "good": 6,
+        "defect": 6
+      },
+      "s02": {
+        "n": 12,
+        "good": 6,
+        "defect": 6
+      },
+      "s03": {
+        "n": 12,
+        "good": 6,
+        "defect": 6
+      }
+    },
+    "split": "train=s01, val=s02, test=s03 (split_by_session)"
+  },
+  "training_config": {
+    "epochs": 2,
+    "batch_size": 4,
+    "learning_rate": 0.001,
+    "seed": 0
+  },
+  "best_epoch": 1,
+  "val_history": [
+    {
+      "accuracy": 0.5,
+      "precision_defect": 0.0,
+      "recall_defect": 0.0,
+      "f1_defect": 0.0,
+      "confusion": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 6,
+        "fn": 6
+      },
+      "data_source": "synthetic"
+    },
+    {
+      "accuracy": 0.5,
+      "precision_defect": 0.0,
+      "recall_defect": 0.0,
+      "f1_defect": 0.0,
+      "confusion": {
+        "tp": 0,
+        "fp": 0,
+        "tn": 6,
+        "fn": 6
+      },
+      "data_source": "synthetic"
+    }
+  ],
+  "test_metrics": {
+    "accuracy": 0.5,
+    "precision_defect": 0.0,
+    "recall_defect": 0.0,
+    "f1_defect": 0.0,
+    "confusion": {
+      "tp": 0,
+      "fp": 0,
+      "tn": 6,
+      "fn": 6
+    },
+    "data_source": "synthetic"
+  }
+}

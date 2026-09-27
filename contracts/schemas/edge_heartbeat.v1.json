@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/edge_heartbeat.v1",
+  "title": "Edge Server heartbeat (SAFETY-RELEVANT, SF-02)",
+  "description": "Absence longer than comm.heartbeat_timeout_ms puts the Cell Controller in FAULT(COMM_LOSS). Envelope seq must increase.",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "uptime_ms",
+    "services_ok"
+  ],
+  "properties": {
+    "uptime_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "services_ok": {
+      "type": "boolean",
+      "description": "False if a production-critical service is FAULT."
+    }
+  },
+  "additionalProperties": false
+}

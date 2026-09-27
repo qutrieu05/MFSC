@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/cmd_ack.v1",
+  "title": "Command acknowledgement",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "cmd_id",
+    "action",
+    "result"
+  ],
+  "properties": {
+    "cmd_id": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "result": {
+      "enum": [
+        "ACCEPTED",
+        "REJECTED",
+        "DONE",
+        "FAILED"
+      ]
+    },
+    "reason": {
+      "type": "string",
+      "description": "Required for REJECTED/FAILED, e.g. estop_latched, not_idle, invalid_params."
+    },
+    "state_after": {
+      "enum": [
+        "BOOT",
+        "SELF_TEST",
+        "IDLE",
+        "STARTING",
+        "RUNNING",
+        "STOPPING",
+        "SAFE_STOP",
+        "FAULT",
+        "ESTOP"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

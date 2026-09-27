@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/service_state.v1",
+  "title": "Edge Server service state change",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "service",
+    "state"
+  ],
+  "properties": {
+    "service": {
+      "type": "string"
+    },
+    "state": {
+      "enum": [
+        "STARTING",
+        "OK",
+        "DEGRADED",
+        "FAULT",
+        "STOPPED"
+      ]
+    },
+    "detail": {
+      "type": "string",
+      "maxLength": 200
+    }
+  },
+  "additionalProperties": false
+}

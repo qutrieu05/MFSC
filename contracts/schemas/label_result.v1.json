@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/label_result.v1",
+  "title": "OCR label result (DRAFT, Phase 3)",
+  "x-status": "draft",
+  "type": "object",
+  "required": [
+    "product_id",
+    "status"
+  ],
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "pattern": "^[0-9]+-[0-9]+$"
+    },
+    "status": {
+      "enum": [
+        "OK",
+        "EXPIRED",
+        "FORMAT_INVALID",
+        "UNREADABLE",
+        "LABEL_MISSING",
+        "LABEL_MISALIGNED"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

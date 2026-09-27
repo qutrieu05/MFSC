@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S1 Mini Smart Factory Cell — Official Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-title">MINI SMART FACTORY CELL</span>
+    <span class="brand-sub">S1 &middot; Official Dashboard</span>
+  </div>
+  <div class="header-badges">
+    <span id="badge-mode" class="badge badge-sim">SOFTWARE SIMULATION &middot; NO HARDWARE</span>
+    <span id="badge-runtime" class="badge badge-unknown">RUNTIME: —</span>
+    <span id="badge-machine" class="badge badge-unknown">CELL: —</span>
+    <span id="ws-indicator" class="ws-indicator" title="Live connection">●</span>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab-btn active" data-tab="overview">Overview</button>
+  <button class="tab-btn" data-tab="production">Production</button>
+  <button class="tab-btn" data-tab="vision-ocr">Vision &amp; OCR</button>
+  <button class="tab-btn" data-tab="safety">Safety</button>
+  <button class="tab-btn" data-tab="health">Machine Health</button>
+  <button class="tab-btn" data-tab="oee">OEE</button>
+  <button class="tab-btn" data-tab="events">Event Log</button>
+  <button class="tab-btn" data-tab="diagnostics">Diagnostics</button>
+</nav>
+
+<main class="app-main">
+
+  <!-- ================= OVERVIEW ================= -->
+  <section class="tab-panel active" id="panel-overview">
+    <div class="card-grid card-grid-4">
+      <div class="stat-card">
+        <div class="stat-label">Production</div>
+        <div class="stat-value" id="ov-total">0</div>
+        <div class="stat-sub"><span id="ov-good" class="pill pill-good">0 good</span> <span id="ov-defect" class="pill pill-bad">0 defect</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">OEE</div>
+        <div class="stat-value" id="ov-oee">—</div>
+        <div class="stat-sub">A <span id="ov-avail">—</span> &middot; P <span id="ov-perf">—</span> &middot; Q <span id="ov-qual">—</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Machine Health</div>
+        <div class="stat-value"><span id="ov-health" class="state-pill state-unknown">UNKNOWN</span></div>
+        <div class="stat-sub" id="ov-health-score">score: —</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Safety</div>
+        <div class="stat-value"><span id="ov-safety" class="state-pill state-unknown">UNKNOWN</span></div>
+        <div class="stat-sub" id="ov-safety-sub">—</div>
+      </div>
+    </div>
+
+    <div class="panel-row">
+      <div class="panel-box panel-box-wide">
+        <h3>Inspection Pipeline — Latest Product</h3>
+        <div id="ov-pipeline" class="pipeline-flow"></div>
+      </div>
+    </div>
+
+    <div class="panel-row">
+      <div class="panel-box">
+        <h3>Recent Events</h3>
+        <div id="ov-events" class="event-list compact"></div>
+      </div>
+      <div class="panel-box">
+        <h3>System</h3>
+        <table class="kv-table" id="ov-system"></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRODUCTION ================= -->
+  <section class="tab-panel" id="panel-production">
+    <div class="toolbar">
+      <label for="prod-filter">Filter:</label>
+      <select id="prod-filter">
+        <option value="all">All</option>
+        <option value="good">GOOD</option>
+        <option value="defect">DEFECT</option>
+        <option value="uncertain">UNCERTAIN</option>
+        <option value="passed">PASSED</option>
+        <option value="rejected">REJECTED</option>
+      </select>
+      <span class="toolbar-summary" id="prod-summary"></span>
+    </div>
+    <table class="data-table" id="prod-table">
+      <thead>
+        <tr>
+          <th>Product ID</th><th>Detected (ms)</th><th>Vision</th><th>OCR</th>
+          <th>Decision</th><th>Controller</th><th>Reason</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- ================= VISION & OCR ================= -->
+  <section class="tab-panel" id="panel-vision-ocr">
+    <div class="panel-box">
+      <h3>Camera → Vision → OCR → Decision → Safety → Result</h3>
+      <div id="pipeline-detail" class="pipeline-flow pipeline-flow-large"></div>
+    </div>
+  </section>
+
+  <!-- ================= SAFETY ================= -->
+  <section class="tab-panel" id="panel-safety">
+    <div class="card-grid card-grid-3">
+      <div class="stat-card">
+        <div class="stat-label">Safety Level</div>
+        <div class="stat-value"><span id="safety-level" class="state-pill state-unknown">UNKNOWN</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Machine State</div>
+        <div class="stat-value" id="safety-machine-state">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Faults</div>
+        <div class="stat-value" id="safety-fault-count">0</div>
+      </div>
+    </div>
+    <div class="panel-box">
+      <h3>Safety Detail</h3>
+      <table class="kv-table" id="safety-detail"></table>
+    </div>
+  </section>
+
+  <!-- ================= MACHINE HEALTH ================= -->
+  <section class="tab-panel" id="panel-health">
+    <p class="section-note">Data source: SOFTWARE SIMULATION / HOST DATA. No predictive-maintenance accuracy claimed.</p>
+    <div class="card-grid card-grid-3">
+      <div class="stat-card">
+        <div class="stat-label">Health State</div>
+        <div class="stat-value"><span id="health-state" class="state-pill state-unknown">UNKNOWN</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Health Score</div>
+        <div class="stat-value" id="health-score">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Anomalies</div>
+        <div class="stat-value" id="health-anomaly-count">0</div>
+      </div>
+    </div>
+    <div class="panel-row">
+      <div class="panel-box">
+        <h3>Latest Sensor Readings</h3>
+        <table class="data-table" id="health-sensors-table">
+          <thead><tr><th>Sensor</th><th>Type</th><th>Value</th><th>Quality</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="panel-box">
+        <h3>Active Anomalies</h3>
+        <table class="data-table" id="health-anomalies-table">
+          <thead><tr><th>Sensor</th><th>Severity</th><th>Kind</th><th>Reason</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= OEE ================= -->
+  <section class="tab-panel" id="panel-oee">
+    <div class="card-grid card-grid-4">
+      <div class="stat-card"><div class="stat-label">Availability</div><div class="stat-value" id="oee-avail">—</div></div>
+      <div class="stat-card"><div class="stat-label">Performance</div><div class="stat-value" id="oee-perf">—</div></div>
+      <div class="stat-card"><div class="stat-label">Quality</div><div class="stat-value" id="oee-qual">—</div></div>
+      <div class="stat-card"><div class="stat-label">OEE</div><div class="stat-value" id="oee-oee">—</div></div>
+    </div>
+    <div class="panel-box">
+      <h3>Production Detail</h3>
+      <table class="kv-table" id="oee-detail"></table>
+    </div>
+  </section>
+
+  <!-- ================= EVENT LOG ================= -->
+  <section class="tab-panel" id="panel-events">
+    <div class="toolbar">
+      <label for="event-filter">Severity:</label>
+      <select id="event-filter">
+        <option value="all">All</option>
+        <option value="INFO">INFO</option>
+        <option value="WARNING">WARNING</option>
+        <option value="FAULT">FAULT</option>
+        <option value="CRITICAL">CRITICAL</option>
+      </select>
+    </div>
+    <div id="event-list-full" class="event-list"></div>
+  </section>
+
+  <!-- ================= DIAGNOSTICS ================= -->
+  <section class="tab-panel" id="panel-diagnostics">
+    <div class="panel-box">
+      <h3>Runtime / Controller</h3>
+      <table class="kv-table" id="diag-runtime"></table>
+    </div>
+    <div class="panel-box">
+      <h3>Subsystem Status</h3>
+      <table class="data-table" id="diag-subsystems">
+        <thead><tr><th>Subsystem</th><th>Status</th><th>Reason</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="control-dock">
+  <div class="control-group">
+    <span class="control-group-label">Operator</span>
+    <button data-action="start" class="btn btn-ok">START</button>
+    <button data-action="stop" class="btn">STOP</button>
+    <button data-action="reset" class="btn btn-warn">RESET</button>
+  </div>
+  <div class="control-group">
+    <span class="control-group-label">Simulate Product</span>
+    <button data-action="simulate/good" class="btn btn-good">GOOD</button>
+    <button data-action="simulate/defect" class="btn btn-bad">DEFECT</button>
+    <button data-action="simulate/uncertain" class="btn">UNCERTAIN</button>
+    <button data-action="simulate/ocr-failure" class="btn">OCR FAILURE</button>
+  </div>
+  <div class="control-group">
+    <span class="control-group-label">Simulate Health</span>
+    <button data-action="simulate/health-warning" class="btn btn-warn">WARNING</button>
+    <button data-action="simulate/health-critical" class="btn btn-bad">CRITICAL</button>
+    <button data-action="simulate/health-recovery" class="btn">RECOVERY</button>
+  </div>
+  <div class="control-group">
+    <span class="control-group-label">Safety</span>
+    <button data-action="simulate/safety-stop" class="btn btn-estop">E-STOP</button>
+  </div>
+  <div class="control-group">
+    <span class="control-group-label">Demo</span>
+    <button id="run-full-demo" class="btn btn-demo">▶ RUN FULL DEMO</button>
+  </div>
+  <div id="control-feedback" class="control-feedback"></div>
+</footer>
+
+<div id="demo-summary-modal" class="modal hidden">
+  <div class="modal-content">
+    <h2>S1 SOFTWARE DEMONSTRATION SUMMARY</h2>
+    <p class="section-note">SOFTWARE SIMULATION — NO PHYSICAL HARDWARE</p>
+    <table class="kv-table" id="demo-summary-table"></table>
+    <button id="close-demo-summary" class="btn">Close</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

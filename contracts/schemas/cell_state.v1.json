@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/cell_state.v1",
+  "title": "Cell Controller state snapshot (retained)",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "machine_state",
+    "active_faults",
+    "speed_setpoint_pct",
+    "motor_output_pct",
+    "safety_relay_closed",
+    "pusher",
+    "queue_len",
+    "safety_vision_required",
+    "counters"
+  ],
+  "properties": {
+    "machine_state": {
+      "enum": [
+        "BOOT",
+        "SELF_TEST",
+        "IDLE",
+        "STARTING",
+        "RUNNING",
+        "STOPPING",
+        "SAFE_STOP",
+        "FAULT",
+        "ESTOP"
+      ]
+    },
+    "active_faults": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[FE][0-9]{3}$"
+      }
+    },
+    "speed_setpoint_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "motor_output_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "safety_relay_closed": {
+      "type": "boolean"
+    },
+    "pusher": {
+      "enum": [
+        "RETRACTED",
+        "EXTENDING",
+        "EXTENDED",
+        "RETRACTING"
+      ]
+    },
+    "queue_len": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "safety_vision_required": {
+      "type": "boolean"
+    },
+    "counters": {
+      "type": "object",
+      "required": [
+        "detected",
+        "passed",
+        "rejected",
+        "no_decision"
+      ],
+      "properties": {
+        "detected": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rejected": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "no_decision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

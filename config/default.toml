@@ -1,0 +1,37 @@
+# MSFC default configuration (committed).
+# Override machine-specific or secret values in config/site.toml (NOT committed)
+# or with environment variables: MSFC__<SECTION>__<KEY>  (e.g. MSFC__MQTT__PORT=1884).
+# Rules: unknown keys are an error; values are range-checked at startup (ADR-0008).
+
+config_version = 1
+
+[system]
+line_id = "line01"          # MQTT topic segment: [a-z0-9]+
+device_id = "edge01"        # this Edge Server's device id
+site_name = "msfc-lab"
+timezone = "Asia/Ho_Chi_Minh"
+
+[mqtt]
+host = "127.0.0.1"          # broker address (Mosquitto on this laptop)
+port = 1883
+username = ""               # set in config/site.toml
+password = ""               # set in config/site.toml
+client_id = "msfc-edge01"
+keepalive_s = 15
+heartbeat_interval_ms = 200  # SF-02 publisher rate (5 Hz); cell timeout is firmware-side
+command_ack_timeout_ms = 2000
+
+[paths]
+runtime_dir = "runtime"     # relative to repo root unless absolute
+log_dir = "logs"
+contracts_dir = "contracts"
+
+[logging]
+console_level = "INFO"
+file_level = "DEBUG"
+json_file = "msfc.jsonl"
+max_bytes = 5242880         # 5 MiB per file
+backup_count = 5
+
+[logging.levels]
+# Per-logger overrides, e.g. "msfc.comm" = "DEBUG"

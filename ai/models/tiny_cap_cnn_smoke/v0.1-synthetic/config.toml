@@ -1,0 +1,17 @@
+[roi]
+x = 0
+y = 0
+width = 128
+height = 128
+target_size = [48, 48]
+
+[preprocessing]
+normalize = "divide_by_255"
+channel_order = "BGR"
+tensor_layout = "CHW"
+
+[training]
+epochs = 2
+batch_size = 4
+learning_rate = 0.001
+seed = 0

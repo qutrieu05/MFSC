@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/health_features.v1",
+  "title": "Motor health features (DRAFT, Phase 5)",
+  "x-status": "draft",
+  "type": "object",
+  "required": [
+    "sensor"
+  ],
+  "properties": {
+    "sensor": {
+      "enum": [
+        "vibration",
+        "temperature",
+        "current"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

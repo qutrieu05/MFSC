@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/safety_heartbeat.v1",
+  "title": "Safety vision heartbeat (SAFETY-RELEVANT, SF-03/SF-04)",
+  "description": "Supplementary, non-certified detection. zone_clear=false, stale or non-increasing frame_seq => SAFE_STOP.",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "zone_clear",
+    "detector_ok",
+    "frame_seq",
+    "frame_age_ms"
+  ],
+  "properties": {
+    "zone_clear": {
+      "type": "boolean"
+    },
+    "detector_ok": {
+      "type": "boolean"
+    },
+    "frame_seq": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Must strictly increase; otherwise treated as stale."
+    },
+    "frame_age_ms": {
+      "type": "number",
+      "minimum": 0
+    },
+    "persons_in_zone": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "zones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "zone_id",
+          "occupied"
+        ],
+        "properties": {
+          "zone_id": {
+            "type": "string"
+          },
+          "occupied": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

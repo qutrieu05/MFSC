@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/device_status.v1",
+  "title": "Device online status (retained, Last Will)",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "online"
+  ],
+  "properties": {
+    "online": {
+      "type": "boolean"
+    },
+    "sw_version": {
+      "type": "string"
+    },
+    "ip": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string",
+      "description": "e.g. lwt, shutdown"
+    }
+  },
+  "additionalProperties": false
+}

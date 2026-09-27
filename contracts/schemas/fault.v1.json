@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/fault.v1",
+  "title": "Fault raised/cleared",
+  "description": "Fault codes are defined in docs/SAFETY_CONCEPT.md section 5.",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "code",
+    "name",
+    "severity",
+    "event",
+    "latched"
+  ],
+  "properties": {
+    "code": {
+      "type": "string",
+      "pattern": "^[FE][0-9]{3}$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "severity": {
+      "enum": [
+        "INFO",
+        "WARNING",
+        "FAULT",
+        "SAFETY"
+      ]
+    },
+    "event": {
+      "enum": [
+        "RAISED",
+        "CLEARED"
+      ]
+    },
+    "latched": {
+      "type": "boolean"
+    },
+    "detail": {
+      "type": "string",
+      "maxLength": 120
+    }
+  },
+  "additionalProperties": false
+}

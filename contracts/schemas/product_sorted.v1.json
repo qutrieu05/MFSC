@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/product_sorted.v1",
+  "title": "Product sorting outcome at S2 (Cell Controller clock)",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "product_id",
+    "action",
+    "reason",
+    "verdict_received",
+    "t_detect_mono_ms",
+    "t_s2_mono_ms"
+  ],
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "pattern": "^[0-9]+-[0-9]+$",
+      "description": "<boot_id>-<counter>, issued by the Cell Controller."
+    },
+    "action": {
+      "enum": [
+        "PASSED",
+        "REJECTED"
+      ]
+    },
+    "reason": {
+      "enum": [
+        "VERDICT_GOOD",
+        "VERDICT_DEFECT",
+        "NO_DECISION",
+        "TRACKING_MISMATCH"
+      ]
+    },
+    "verdict_received": {
+      "type": "boolean"
+    },
+    "t_detect_mono_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "t_verdict_rx_mono_ms": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "t_s2_mono_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "t_push_mono_ms": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "latency_detect_to_verdict_ms": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "margin_ms": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "t_s2 - t_verdict_rx; must be > 0."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/control_cmd.v1",
+  "title": "Operator/control command to the Cell Controller",
+  "description": "Remote reset is refused while ESTOP is latched (SAF-05).",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "cmd_id",
+    "action",
+    "source"
+  ],
+  "properties": {
+    "cmd_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "action": {
+      "enum": [
+        "start",
+        "stop",
+        "reset",
+        "set_speed",
+        "pusher_test"
+      ]
+    },
+    "params": {
+      "type": "object",
+      "properties": {
+        "speed_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "string",
+      "description": "e.g. cli, dashboard, test"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/decision_record.v1",
+  "title": "Decision trace record (one per product)",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "decision_id",
+    "product_id",
+    "final_verdict",
+    "reason_codes",
+    "rules_version",
+    "late"
+  ],
+  "properties": {
+    "decision_id": {
+      "type": "string"
+    },
+    "product_id": {
+      "type": "string",
+      "pattern": "^[0-9]+-[0-9]+$"
+    },
+    "final_verdict": {
+      "enum": [
+        "GOOD",
+        "DEFECT"
+      ]
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "description": "Summaries of vision/ocr inputs used."
+    },
+    "rules_version": {
+      "type": "string"
+    },
+    "late": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}
