@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/state_changed.v1",
+  "title": "Cell state transition event",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "from",
+    "to",
+    "cause"
+  ],
+  "properties": {
+    "from": {
+      "enum": [
+        "BOOT",
+        "SELF_TEST",
+        "IDLE",
+        "STARTING",
+        "RUNNING",
+        "STOPPING",
+        "SAFE_STOP",
+        "FAULT",
+        "ESTOP"
+      ]
+    },
+    "to": {
+      "enum": [
+        "BOOT",
+        "SELF_TEST",
+        "IDLE",
+        "STARTING",
+        "RUNNING",
+        "STOPPING",
+        "SAFE_STOP",
+        "FAULT",
+        "ESTOP"
+      ]
+    },
+    "cause": {
+      "type": "string",
+      "description": "Fault code (F010), command (cmd:start) or local input (local:reset_button)."
+    }
+  },
+  "additionalProperties": false
+}

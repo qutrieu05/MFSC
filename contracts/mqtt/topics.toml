@@ -1,0 +1,318 @@
+# MSFC MQTT topic registry — SINGLE SOURCE OF TRUTH for topics (FR-COM-02).
+# Code must load topics from this file (Python) or from headers generated from it (firmware).
+# Human-readable specification: docs/MQTT_CONTRACT.md
+#
+# Topic grammar: {root}/{line_id}/{subsystem}/{device_id}/{class}[/{name}]
+# status: "active" = specified for its phase; "draft" = reserved, payload may change.
+
+contract_version = "0.1.0"
+root = "factory"
+default_line_id = "line01"
+message_classes = ["status", "state", "heartbeat", "event", "telemetry", "cmd", "ack", "fault"]
+subsystems = ["conveyor", "system", "vision", "decision", "safety", "ocr", "oee", "health"]
+
+# ---------------------------------------------------------------- conveyor (ESP32 Cell Controller, N1)
+[[topic]]
+key = "conveyor.status"
+pattern = "factory/{line_id}/conveyor/{device_id}/status"
+publisher = "cell_controller"
+subscribers = ["edge_server"]
+qos = 1
+retain = true
+schema = "device_status.v1"
+rate = "on connect/disconnect (Last Will)"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "conveyor.state"
+pattern = "factory/{line_id}/conveyor/{device_id}/state"
+publisher = "cell_controller"
+subscribers = ["edge_server", "dashboard"]
+qos = 1
+retain = true
+schema = "cell_state.v1"
+rate = "on change + every 5 s"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "conveyor.heartbeat"
+pattern = "factory/{line_id}/conveyor/{device_id}/heartbeat"
+publisher = "cell_controller"
+subscribers = ["edge_server"]
+qos = 0
+retain = false
+schema = "device_heartbeat.v1"
+rate = "1 Hz"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "conveyor.event.product_detected"
+pattern = "factory/{line_id}/conveyor/{device_id}/event/product_detected"
+publisher = "cell_controller"
+subscribers = ["edge_server"]
+qos = 1
+retain = false
+schema = "product_detected.v1"
+rate = "per product"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "conveyor.event.product_sorted"
+pattern = "factory/{line_id}/conveyor/{device_id}/event/product_sorted"
+publisher = "cell_controller"
+subscribers = ["edge_server"]
+qos = 1
+retain = false
+schema = "product_sorted.v1"
+rate = "per product"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "conveyor.event.state_changed"
+pattern = "factory/{line_id}/conveyor/{device_id}/event/state_changed"
+publisher = "cell_controller"
+subscribers = ["edge_server"]
+qos = 1
+retain = false
+schema = "state_changed.v1"
+rate = "on change"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "conveyor.fault"
+pattern = "factory/{line_id}/conveyor/{device_id}/fault"
+publisher = "cell_controller"
+subscribers = ["edge_server"]
+qos = 1
+retain = false
+schema = "fault.v1"
+rate = "on raise/clear"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "conveyor.telemetry.timing"
+pattern = "factory/{line_id}/conveyor/{device_id}/telemetry/timing"
+publisher = "cell_controller"
+subscribers = ["edge_server"]
+qos = 0
+retain = false
+schema = "timing_stats.v1"
+rate = "every 10 s while RUNNING"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "conveyor.cmd.verdict"
+pattern = "factory/{line_id}/conveyor/{device_id}/cmd/verdict"
+publisher = "edge_server"
+subscribers = ["cell_controller"]
+qos = 1
+retain = false
+schema = "verdict_cmd.v1"
+rate = "per product"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "conveyor.cmd.control"
+pattern = "factory/{line_id}/conveyor/{device_id}/cmd/control"
+publisher = "edge_server"
+subscribers = ["cell_controller"]
+qos = 1
+retain = false
+schema = "control_cmd.v1"
+rate = "on operator action"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "conveyor.ack"
+pattern = "factory/{line_id}/conveyor/{device_id}/ack"
+publisher = "cell_controller"
+subscribers = ["edge_server"]
+qos = 1
+retain = false
+schema = "cmd_ack.v1"
+rate = "per control command"
+phase = 1
+status = "active"
+
+# ---------------------------------------------------------------- system (Edge Server, N2)
+[[topic]]
+key = "system.status"
+pattern = "factory/{line_id}/system/{device_id}/status"
+publisher = "edge_server"
+subscribers = ["cell_controller", "dashboard"]
+qos = 1
+retain = true
+schema = "device_status.v1"
+rate = "on connect/disconnect (Last Will)"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "system.heartbeat"
+pattern = "factory/{line_id}/system/{device_id}/heartbeat"
+publisher = "edge_server"
+subscribers = ["cell_controller"]
+qos = 0
+retain = false
+schema = "edge_heartbeat.v1"
+rate = "5 Hz (SAFETY-RELEVANT: SF-02)"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "system.event.service_state"
+pattern = "factory/{line_id}/system/{device_id}/event/service_state"
+publisher = "edge_server"
+subscribers = ["dashboard"]
+qos = 1
+retain = false
+schema = "service_state.v1"
+rate = "on change"
+phase = 1
+status = "active"
+
+# ---------------------------------------------------------------- vision (L3 on N2)
+[[topic]]
+key = "vision.status"
+pattern = "factory/{line_id}/vision/{device_id}/status"
+publisher = "edge_server"
+subscribers = ["dashboard"]
+qos = 1
+retain = true
+schema = "device_status.v1"
+rate = "on change"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "vision.event.inspection_result"
+pattern = "factory/{line_id}/vision/{device_id}/event/inspection_result"
+publisher = "edge_server"
+subscribers = ["edge_server", "dashboard"]
+qos = 1
+retain = false
+schema = "inspection_result.v1"
+rate = "per product"
+phase = 1
+status = "active"
+
+[[topic]]
+key = "vision.telemetry.perf"
+pattern = "factory/{line_id}/vision/{device_id}/telemetry/perf"
+publisher = "edge_server"
+subscribers = ["dashboard"]
+qos = 0
+retain = false
+schema = "vision_perf.v1"
+rate = "every 5 s"
+phase = 1
+status = "active"
+
+# ---------------------------------------------------------------- decision (L4 on N2)
+[[topic]]
+key = "decision.event.decision_record"
+pattern = "factory/{line_id}/decision/{device_id}/event/decision_record"
+publisher = "edge_server"
+subscribers = ["dashboard"]
+qos = 1
+retain = false
+schema = "decision_record.v1"
+rate = "per product"
+phase = 1
+status = "active"
+
+# ---------------------------------------------------------------- safety vision (L3 on N2), Phase 2
+[[topic]]
+key = "safety.status"
+pattern = "factory/{line_id}/safety/{device_id}/status"
+publisher = "edge_server"
+subscribers = ["dashboard"]
+qos = 1
+retain = true
+schema = "device_status.v1"
+rate = "on change"
+phase = 2
+status = "active"
+
+[[topic]]
+key = "safety.heartbeat"
+pattern = "factory/{line_id}/safety/{device_id}/heartbeat"
+publisher = "edge_server"
+subscribers = ["cell_controller"]
+qos = 0
+retain = false
+schema = "safety_heartbeat.v1"
+rate = ">= 5 Hz (SAFETY-RELEVANT: SF-03, SF-04)"
+phase = 2
+status = "active"
+
+[[topic]]
+key = "safety.event.intrusion"
+pattern = "factory/{line_id}/safety/{device_id}/event/intrusion"
+publisher = "edge_server"
+subscribers = ["dashboard"]
+qos = 1
+retain = false
+schema = "intrusion_event.v1"
+rate = "on enter/exit"
+phase = 2
+status = "active"
+
+# ---------------------------------------------------------------- reserved for later phases (draft)
+[[topic]]
+key = "ocr.event.label_result"
+pattern = "factory/{line_id}/ocr/{device_id}/event/label_result"
+publisher = "edge_server"
+subscribers = ["edge_server", "dashboard"]
+qos = 1
+retain = false
+schema = "label_result.v1"
+rate = "per product"
+phase = 3
+status = "draft"
+
+[[topic]]
+key = "oee.state.metrics"
+pattern = "factory/{line_id}/oee/{device_id}/state"
+publisher = "edge_server"
+subscribers = ["dashboard"]
+qos = 1
+retain = true
+schema = "oee_metrics.v1"
+rate = "every 10 s"
+phase = 4
+status = "draft"
+
+[[topic]]
+key = "health.telemetry.features"
+pattern = "factory/{line_id}/health/{device_id}/telemetry/features"
+publisher = "health_node"
+subscribers = ["edge_server"]
+qos = 0
+retain = false
+schema = "health_features.v1"
+rate = "every 1 s"
+phase = 5
+status = "draft"
+
+[[topic]]
+key = "health.state"
+pattern = "factory/{line_id}/health/{device_id}/state"
+publisher = "edge_server"
+subscribers = ["dashboard"]
+qos = 1
+retain = true
+schema = "health_state.v1"
+rate = "on change"
+phase = 5
+status = "draft"

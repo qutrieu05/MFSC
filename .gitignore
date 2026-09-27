@@ -1,0 +1,49 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+.coverage
+htmlcov/
+
+# --- Local configuration (secrets, site-specific values) ---
+config/site.toml
+config/*.local.toml
+*.env
+
+# --- Runtime output ---
+logs/
+runtime/
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# --- AI data and artifacts (tracked via manifests, not git) ---
+ai/datasets/**/raw/
+ai/datasets/**/images/
+ai/datasets/**/labels/
+ai/models/**/*.pt
+ai/models/**/*.onnx
+ai/models/**/*.engine
+ai/runs/
+
+# --- Firmware build output ---
+firmware/**/build/
+firmware/**/.pio/
+firmware/**/managed_components/
+firmware/**/sdkconfig.old
+firmware/**/test_host/*.exe
+firmware/**/test_host/*.build.log
+
+# --- Editors / OS ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+Thumbs.db
+.DS_Store
+
+# --- Claude Inc private project workspace (confidential, never commit) ---
+.claude/company/

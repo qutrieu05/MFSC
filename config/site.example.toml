@@ -1,0 +1,10 @@
+# Copy to config/site.toml (gitignored) and edit for this machine.
+# Only include the keys you want to override.
+
+[mqtt]
+host = "192.168.1.10"       # broker address reachable by the ESP32
+username = "edge_server"
+password = "change-me"      # NEVER commit real credentials (NFR-SEC-02)
+
+[logging]
+console_level = "DEBUG"

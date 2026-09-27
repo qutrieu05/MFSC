@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/timing_stats.v1",
+  "title": "Cell Controller timing statistics window",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "window_s",
+    "samples",
+    "detect_to_verdict_ms",
+    "margin_ms",
+    "late_count",
+    "no_decision_count"
+  ],
+  "properties": {
+    "window_s": {
+      "type": "number",
+      "minimum": 0
+    },
+    "samples": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "detect_to_verdict_ms": {
+      "type": "object",
+      "required": [
+        "p50",
+        "p95",
+        "max"
+      ],
+      "properties": {
+        "p50": {
+          "type": "number",
+          "minimum": 0
+        },
+        "p95": {
+          "type": "number",
+          "minimum": 0
+        },
+        "max": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "margin_ms": {
+      "type": "object",
+      "required": [
+        "min",
+        "p50"
+      ],
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "p50": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "late_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "no_decision_count": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false
+}

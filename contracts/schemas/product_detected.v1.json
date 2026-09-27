@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/product_detected.v1",
+  "title": "Product detected at inspection sensor S1",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "product_id",
+    "sensor",
+    "t_detect_mono_ms"
+  ],
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "pattern": "^[0-9]+-[0-9]+$",
+      "description": "<boot_id>-<counter>, issued by the Cell Controller."
+    },
+    "sensor": {
+      "const": "S1"
+    },
+    "t_detect_mono_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "speed_setpoint_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    }
+  },
+  "additionalProperties": false
+}

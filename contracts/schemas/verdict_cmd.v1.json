@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "msfc/verdict_cmd.v1",
+  "title": "Verdict for one product (advisory; the Cell Controller owns timing)",
+  "x-status": "active",
+  "type": "object",
+  "required": [
+    "product_id",
+    "verdict",
+    "decision_id",
+    "reason_codes"
+  ],
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "pattern": "^[0-9]+-[0-9]+$",
+      "description": "<boot_id>-<counter>, issued by the Cell Controller."
+    },
+    "verdict": {
+      "enum": [
+        "GOOD",
+        "DEFECT"
+      ]
+    },
+    "decision_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 8
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "additionalProperties": false
+}

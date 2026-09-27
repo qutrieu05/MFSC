@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "s1-dashboard",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["edge/run_dashboard.py", "--host", "127.0.0.1", "--port", "8000"],
+      "port": 8000
+    }
+  ]
+}
